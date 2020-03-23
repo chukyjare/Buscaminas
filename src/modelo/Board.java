@@ -6,6 +6,8 @@ public class Board {
 	private Square[][] board;
 	private Difficulty difficulty;
 	private Density density;
+	private Coordinate coordinate;
+
 
 	public Board(int dimension, int numberBombs, Square[][] board) {
 		super();
@@ -32,6 +34,13 @@ public class Board {
 
 	public Density getDensity() {
 		return density;
+	}
+	public Coordinate getCoordinate() {
+		return coordinate;
+	}
+	
+	public void setCoordinate(Coordinate coordinate) {
+		this.coordinate = coordinate;
 	}
 
 }
