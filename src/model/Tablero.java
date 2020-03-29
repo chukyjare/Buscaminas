@@ -5,11 +5,13 @@ import utiles.Utiles;
 public class Tablero {
 
 	private Casilla[][] casillas;
+	
 
 	public Tablero(int lado, int numeroBombas) {
 		super();
 		crearTablero(lado);
 		colocarMinas(lado, numeroBombas);
+		
 	}
 
 	private void establecerMinasAlrededor(int lado, Coordenada posicionMinaCoordenada) {
@@ -44,9 +46,8 @@ public class Tablero {
 
 	private void enumerarContigua(int i, int j) {
 		Coordenada posicionContigua;
-		int numBombas;
 		posicionContigua = new Coordenada(i, j);
-		numBombas = getCasilla(posicionContigua).getMinasAlrededor();
+		int numBombas = getCasilla(posicionContigua).getMinasAlrededor();
 		getCasilla(posicionContigua).setMinasAlrededor(numBombas++);
 	}
 
@@ -92,7 +93,9 @@ public class Tablero {
 	}
 
 	public void desvelarCasilla(Coordenada coordenada) {
-		getCasilla(coordenada).setVelada(false);
+		if () {
+			
+		}
 	}
 
 }
