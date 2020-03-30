@@ -39,4 +39,21 @@ public class Coordenada {
 		return retorno;
 	}
 
+	public Coordenada creaNuevaAlrededor(int i) {
+		Coordenada nueva = new Coordenada(this.posX, this.posY);
+		if (i<=3 && i!=0) {
+			setPosY(posY+1);
+		}
+		if (i==0 || i==1 || i==7) {
+			setPosX(posX+1);
+		}
+		if (i>4 && i<8) {
+			setPosY(posY-1);
+		}
+		if (i>2 && i<6) {
+			setPosX(posX-1);
+		}
+		return nueva;
+	}
+
 }

@@ -91,11 +91,31 @@ public class Tablero {
 	private boolean isMina(Coordenada posicion) {
 		return getCasilla(posicion).isMina();
 	}
+	
+	public boolean marcarCasilla(Coordenada coord) {
+		return getCasilla(coord).marcar();
+	}
 
 	public void desvelarCasilla(Coordenada coordenada) {
-		if () {
-			
+		int alrededor=8;
+		 Casilla casilla= getCasilla(coordenada);
+		if (casilla.getMinasAlrededor()==0 && ((!casilla.isMina()) && casilla.isVelada()) && (!casilla.isMarcada())) {
+			casilla.setVelada(false);
+			for (int i = 0; i < alrededor; i++) {
+				Coordenada coordContigua= coordenada.creaNuevaAlrededor(i);
+				if (verificarEsquinas(coordContigua)) {
+					
+				}
+			}
 		}
+	}
+
+	private boolean verificarEsquinas(Coordenada coordContigua) {
+		boolean retorno=true;
+		if ((coordContigua.getPosX()==0 && coordContigua.getPosY()==0) || (coordContigua.getPosX()==)) {
+			retorno=false;
+		}
+		return retorno;
 	}
 
 }
