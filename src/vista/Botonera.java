@@ -1,6 +1,7 @@
 package vista;
 
 import java.awt.Component;
+
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
@@ -8,11 +9,20 @@ import javax.swing.JPanel;
 
 import Control.MiMouseListener;
 import model.Coordenada;
+import model.Tablero;
+import Control.DesveladorController;
+import Control.MarcadorController;
 
 public class Botonera extends JPanel {
 	MiMouseListener miListener;
+	private MarcadorController marcarCasilla;
+	private DesveladorController desveladorController;
+//	private TableroWinController tableroWinLose;
 
-	public Botonera(int lado, MiMouseListener miListener) {
+	public Botonera(int lado, MiMouseListener miListener, Tablero tablero) {
+		this.marcarCasilla = new MarcadorController(tablero);
+		this.desveladorController = new DesveladorController(tablero);
+//		this.tableroWinLose = new TableroWinController(tablero);
 		this.miListener = miListener;
 		// TODO el nombre para cuando hay mas de 10 de lado.
 		// debe ser de dos digitos por coordenada aunque el valor<10

@@ -12,8 +12,10 @@ public class ParaUI extends UserInterface {
 	DesveladorController desveladorController;
 	Tablero tablero;
 	MiMouseListener miMouseListener;
+	MarcadorController marcarCasilla;
 
 	public ParaUI() {
+	
 		btnReiniciar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cargarJuego();
@@ -34,7 +36,7 @@ public class ParaUI extends UserInterface {
 		tablero = new Tablero(lado, Utiles.calculaMinas(lado, getDensidad().getPorcentaje()));
 		desveladorController = new DesveladorController(tablero);
 		miMouseListener=new MiMouseListener(desveladorController);
-		Botonera botonera = new Botonera(lado, miMouseListener);
+		Botonera botonera = new Botonera(lado, miMouseListener, tablero);
 		
 		//La parte del UI
 		getHuecoBotonera().removeAll();

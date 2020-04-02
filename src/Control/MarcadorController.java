@@ -12,4 +12,10 @@ public class MarcadorController {
 	public boolean marcarCasilla(Coordenada coord) {
 		return tablero.marcarCasilla(coord);
 	}
+
+	public MarcadorController(Tablero tablero) {
+		super();
+		this.tablero = tablero;
+	}
+	
 }

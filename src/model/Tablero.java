@@ -5,29 +5,34 @@ import utiles.Utiles;
 public class Tablero {
 
 	private Casilla[][] casillas;
-	
+	private int lado;
 
 	public Tablero(int lado, int numeroBombas) {
 		super();
 		crearTablero(lado);
 		colocarMinas(lado, numeroBombas);
-		
+		this.lado=lado;
+	}
+
+	public int getLado() {
+		return lado;
 	}
 
 	private void establecerMinasAlrededor(int lado, Coordenada posicionMinaCoordenada) {
 		int i = posicionMinaCoordenada.getPosY();
 		int j = posicionMinaCoordenada.getPosX();
 
-		if (i < (lado - 1)) {
+		int limite = lado - 1;
+		if (i < limite) {
 			enumerarContigua(i + 1, j);
-			if (j < (lado - 1)) {
+			if (j < limite) {
 				enumerarContigua(i + 1, j + 1);
 			}
 			if (j != 0) {
 				enumerarContigua(i + 1, j - 1);
 			}
 		}
-		if (j < (lado - 1)) {
+		if (j < limite) {
 			enumerarContigua(i, j + 1);
 		}
 		if (j!=0) {
@@ -35,7 +40,7 @@ public class Tablero {
 		}
 		if (i != 0) {
 			enumerarContigua(i - 1, j);
-			if (j < (lado - 1)) {
+			if (j < limite) {
 				enumerarContigua(i - 1, j + 1);
 			}
 			if (j != 0) {
@@ -96,23 +101,30 @@ public class Tablero {
 		return getCasilla(coord).marcar();
 	}
 
-	public void desvelarCasilla(Coordenada coordenada) {
+	public void desvelarCasilla(Coordenada coordenada, int lado) {
 		int alrededor=8;
 		 Casilla casilla= getCasilla(coordenada);
 		if (casilla.getMinasAlrededor()==0 && ((!casilla.isMina()) && casilla.isVelada()) && (!casilla.isMarcada())) {
-			casilla.setVelada(false);
+			casilla.desVelar();
 			for (int i = 0; i < alrededor; i++) {
 				Coordenada coordContigua= coordenada.creaNuevaAlrededor(i);
-				if (verificarEsquinas(coordContigua)) {
-					
+				if (verificarEsquinas(coordContigua, lado)) {
+					desvelarCasilla(coordContigua, lado);
 				}
+			}
+		}else {
+			if (!casilla.isMarcada()) {
+				casilla.desVelar();
 			}
 		}
 	}
 
-	private boolean verificarEsquinas(Coordenada coordContigua) {
+	private boolean verificarEsquinas(Coordenada coordContigua, int lado) {
 		boolean retorno=true;
-		if ((coordContigua.getPosX()==0 && coordContigua.getPosY()==0) || (coordContigua.getPosX()==)) {
+		int j=coordContigua.getPosX();
+		int i=coordContigua.getPosY();
+		int limite = lado-1;
+		if ((j==0 && i==0) || (j==0 && i==limite) || (j==limite && i==limite) || (j==(limite) && i==0)) {
 			retorno=false;
 		}
 		return retorno;
