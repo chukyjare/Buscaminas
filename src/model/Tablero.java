@@ -14,6 +14,11 @@ public class Tablero {
 		this.lado=lado;
 	}
 
+	public Tablero(Casilla[][] casillas) {
+		super();
+		this.casillas = casillas;
+	}
+
 	public int getLado() {
 		return lado;
 	}

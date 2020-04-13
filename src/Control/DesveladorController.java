@@ -34,4 +34,5 @@ public class DesveladorController {
 	public ElementoGrafico[][] getEntornoGrafico() {
 		return ConversorGrafico.convertir(tablero.getCasillas());
 	}
+	
 }

@@ -9,6 +9,9 @@ public class Casilla {
 	private boolean marcada=false;
 	private int minasAlrededor=0;
 	
+	public void setVelada(boolean velada) {
+		this.velada = velada;
+	}
 	public Casilla() {
 		
 	}
