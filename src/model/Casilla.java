@@ -24,8 +24,9 @@ public class Casilla {
 	public boolean isVelada() {
 		return velada;
 	}
-	public void desVelar() {
-		this.velada = false;
+	public boolean desVelar() {
+		return this.velada = false;
+		
 	}
 	public boolean isMarcada() {
 		return marcada;

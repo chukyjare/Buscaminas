@@ -106,22 +106,25 @@ public class Tablero {
 		return getCasilla(coord).marcar();
 	}
 
-	public void desvelarCasilla(Coordenada coordenada, int lado) {
+	public boolean desvelarCasilla(Coordenada coordenada, int lado) {
 		int alrededor=8;
+		boolean desvelada=true;
 		 Casilla casilla= getCasilla(coordenada);
 		if (casilla.getMinasAlrededor()==0 && ((!casilla.isMina()) && casilla.isVelada()) && (!casilla.isMarcada())) {
-			casilla.desVelar();
+			desvelada=casilla.desVelar();
 			for (int i = 0; i < alrededor; i++) {
 				Coordenada coordContigua= coordenada.creaNuevaAlrededor(i);
 				if (verificarEsquinas(coordContigua, lado)) {
-					desvelarCasilla(coordContigua, lado);
+					desvelada=desvelarCasilla(coordContigua, lado);
+					
 				}
 			}
 		}else {
 			if (!casilla.isMarcada()) {
-				casilla.desVelar();
+				desvelada=casilla.desVelar();
 			}
 		}
+		return desvelada;
 	}
 
 	private boolean verificarEsquinas(Coordenada coordContigua, int lado) {
@@ -133,6 +136,22 @@ public class Tablero {
 			retorno=false;
 		}
 		return retorno;
+	}
+
+	public boolean isFinTablero(Tablero tablero) {
+		int lado=getCasillas().length;
+		int minas = 0, desveladas = 0, sumaCasillas=lado^2, total=0;
+		for (int i = 0; i < getCasillas().length; i++) {
+			for (int j = 0; j < getCasillas().length; j++) {
+				if (getCasillas()[i][j].isMina()) {
+					minas++;
+				}else if (getCasillas()[i][j].isVelada()){
+					desveladas++;
+				}
+			}
+		}
+		total=sumaCasillas - minas;
+		return (total==desveladas);
 	}
 
 }

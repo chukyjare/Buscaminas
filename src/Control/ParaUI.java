@@ -35,8 +35,8 @@ public class ParaUI extends UserInterface {
 		int lado = getDificultad().getLado();
 		tablero = new Tablero(lado, Utiles.calculaMinas(lado, getDensidad().getPorcentaje()));
 		desveladorController = new DesveladorController(tablero);
-		miMouseListener=new MiMouseListener(desveladorController);
-		Botonera botonera = new Botonera(lado, miMouseListener, tablero);
+		marcarCasilla = new MarcadorController(tablero);
+		Botonera botonera = new Botonera(lado, desveladorController, marcarCasilla);
 		
 		//La parte del UI
 		getHuecoBotonera().removeAll();

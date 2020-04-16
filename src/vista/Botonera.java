@@ -3,9 +3,12 @@ package vista;
 import java.awt.Component;
 
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 import Control.MiMouseListener;
 import model.Coordenada;
@@ -15,15 +18,46 @@ import Control.MarcadorController;
 
 public class Botonera extends JPanel {
 	MiMouseListener miListener;
-	private MarcadorController marcarCasilla;
+	private MarcadorController marcaCasilla;
 	private DesveladorController desveladorController;
+	private int lado;
 //	private TableroWinController tableroWinLose;
 
-	public Botonera(int lado, MiMouseListener miListener, Tablero tablero) {
-		this.marcarCasilla = new MarcadorController(tablero);
-		this.desveladorController = new DesveladorController(tablero);
-//		this.tableroWinLose = new TableroWinController(tablero);
-		this.miListener = miListener;
+	MouseAdapter miMouseAdapter = new MouseAdapter() {
+		public void mouseClicked(MouseEvent e) {
+			super.mouseClicked(e);
+			JButton boton = ((JButton) e.getSource());
+			if (SwingUtilities.isLeftMouseButton(e) && boton.isEnabled()) {
+				if (desveladorController.desvelarCasilla(boton.getName())) {
+					if (desveladorController.revisarTheEnd()) {
+						// TODO Informamos de la victoria
+					desactivarBotones(desveladorController.getEntornoGrafico());
+					}
+				} else {
+					// TODO informamos de perder
+					desactivarBotones(desveladorController.getEntornoGrafico());
+
+				}
+			}
+			if (SwingUtilities.isRightMouseButton(e) && boton.isEnabled()) {
+				marcaCasilla.marcarCasilla(boton.getName());
+			}
+			actualizaBotonera(desveladorController.getEntornoGrafico());
+		}
+	};
+	private void desactivarBotones(ElementoGrafico[][] elementos) {
+		Component[] components = getComponents();
+		for (int i = 0; i < components.length; i++) {
+			JButton boton = (JButton) components[i];
+			Coordenada coordenada = obtenCoordenada(boton.getName());
+			ElementoGrafico elementoGrafico = elementos[coordenada.getPosX()][coordenada.getPosY()];
+			boton.setEnabled(false);
+		}
+	}
+	public Botonera(int lado, DesveladorController desveladorController, MarcadorController marcaCasilla) {
+		this.marcaCasilla = marcaCasilla;
+		this.desveladorController = desveladorController;
+		this.lado = lado;
 		// TODO el nombre para cuando hay mas de 10 de lado.
 		// debe ser de dos digitos por coordenada aunque el valor<10
 		// es decir la coordenada 6:11 debe ser 06:11, por ejemplo.
@@ -34,7 +68,7 @@ public class Botonera extends JPanel {
 				String nombre = Integer.toString(filas) + Integer.toString(columnas);
 				boton.setName(nombre);
 				add(boton);
-				boton.addMouseListener(miListener);
+				boton.addMouseListener(miMouseAdapter);
 			}
 		}
 	}
